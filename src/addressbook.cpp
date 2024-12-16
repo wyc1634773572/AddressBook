@@ -1,4 +1,5 @@
 #include "../include/addressbook.h"
+#include <cstring>
 
 CaddressBook::CaddressBook(){
     _head = new Personinfo();
@@ -11,18 +12,21 @@ CaddressBook::~CaddressBook(){
     LOG_INFO("CaddressBook deleted!");
 }
 
-void CaddressBook::show(){
+void CaddressBook::showall(){
     Personinfo* cur = _head->next;
     while (cur != nullptr)
     {
-        cout << cur->name << endl;
-        cout << cur->address << endl;
-        cout << cur->age << endl;
-        cout << cur->phonenumber << endl;
-        cout << cur->sex << endl;
+        show(cur);
         cur = cur->next;
     }
-    
+}
+
+void CaddressBook::show(Personinfo *p){
+    cout << "姓名：" << p->name << endl;
+    cout << "性别：" << p->sex << endl;
+    cout << "地址：" << p->address << endl;
+    cout << "年龄：" << p->age << endl;
+    cout << "电话号码：" << p->phonenumber << endl;
 }
 
 //传入值和传入指针有什么不同？
@@ -42,4 +46,14 @@ void CaddressBook::delPerson(const char * name){
         }
         cur = cur->next;
     }
+}
+
+void CaddressBook::findPerson(const char * name){
+    Personinfo* cur = _head;
+    while (cur != nullptr)
+    {
+        if(strcmp(cur->name, name) == 0) show(cur);
+        cur = cur->next;
+    }
+
 }

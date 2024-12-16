@@ -31,13 +31,15 @@ public:
 
     ~CaddressBook();
 
-    void show();
+    void showall();
+
+    void show(Personinfo *p);
 
     void addPerson(Personinfo *p);
 
     void delPerson(const char * name);
 
-    void findPerson(Personinfo p);
+    void findPerson(const char * name);
 
     void updatePerson(Personinfo p);
 
