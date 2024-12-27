@@ -1,3 +1,3 @@
 #!/bin/bash
 
-g++ -fno-elide-constructors run.cpp src/addressbook.cpp -I include/ -o main
+g++ -fno-elide-constructors -g run.cpp src/addressbook.cpp src/menu.cpp -I include/ -o main

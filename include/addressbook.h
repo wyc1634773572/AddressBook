@@ -1,4 +1,8 @@
+#ifndef _ADDRESSBOOK_H_
+#define _ADDRESSBOOK_H_
 #include <iostream>
+#include <unistd.h>
+#include <cstring>
 #include "debug.h"
 using namespace std;
 
@@ -10,15 +14,15 @@ enum GENDER{
 
 struct Personinfo
 {
-    const char* name;
-    const char* address;
-    const char* phonenumber;
+    char name[32];
+    char address[32];
+    char phonenumber[32];
     GENDER sex;
     int age;
     Personinfo* next;
 
     //默认初始化
-    Personinfo(const char* n = "佚名"):name(n),address("无"),phonenumber("无"),sex(GENDER::OTHER),age(0),next(nullptr){}
+    Personinfo():name("佚名"),address("无"),phonenumber("无"),sex(GENDER::OTHER),age(0),next(nullptr){}
     Personinfo(const Personinfo &other){
         cout << "拷贝构造" << endl;
     }
@@ -39,11 +43,12 @@ public:
 
     void delPerson(const char * name);
 
-    void findPerson(const char * name);
+    Personinfo* findPerson(const char * name);
 
-    void updatePerson(Personinfo p);
+    void updatePerson(Personinfo *p, Personinfo p2);
 
 private:
     Personinfo* _head;
     Personinfo* _tail;
 };
+#endif
