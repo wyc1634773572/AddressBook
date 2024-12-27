@@ -66,11 +66,8 @@ void Cmenu::run(){
             cin >> buf;
             book->delPerson(buf);
         }
-        cout << "按q键返回主菜单" << endl;
-        char tmp;
-        memset(&tmp,0,1);
-        while(tmp != 'q')
-            cin.get(tmp);
-        
+        cout << "按回车键返回主菜单" << endl;
+        cin.ignore();
+        cin.get();
     }
 }
