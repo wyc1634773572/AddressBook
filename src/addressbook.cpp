@@ -22,11 +22,18 @@ void CaddressBook::showall(){
 }
 
 void CaddressBook::show(Personinfo *p){
-    cout << "姓名：" << p->name << endl;
-    cout << "性别：" << p->sex << endl;
-    cout << "地址：" << p->address << endl;
-    cout << "年龄：" << p->age << endl;
-    cout << "电话号码：" << p->phonenumber << endl;
+    if (p == nullptr){
+        cout << "查无此人"<<endl;
+    }else{
+        cout << "----------------------------------" << endl;
+        cout << "|姓名：" << p->name << endl;
+        cout << "|性别：" << p->sex << endl;
+        cout << "|地址：" << p->address << endl;
+        cout << "|年龄：" << p->age << endl;
+        cout << "|电话号码：" << p->phonenumber << endl;
+        cout << "----------------------------------" << endl;
+    }
+    
 }
 
 //传入值和传入指针有什么不同？
@@ -39,7 +46,7 @@ void CaddressBook::delPerson(const char * name){
     Personinfo* cur = _head;
     while (cur->next != nullptr)
     {
-        if(cur->next->name == name){
+        if(strcmp(cur->next->name, name) == 0){
             delete cur->next;
             cur->next = cur->next->next;
             break;
@@ -48,12 +55,20 @@ void CaddressBook::delPerson(const char * name){
     }
 }
 
-void CaddressBook::findPerson(const char * name){
+Personinfo* CaddressBook::findPerson(const char * name){
     Personinfo* cur = _head;
     while (cur != nullptr)
     {
-        if(strcmp(cur->name, name) == 0) show(cur);
+        if(strcmp(cur->name, name) == 0) break;
         cur = cur->next;
     }
+    return cur;
+}
 
+void CaddressBook::updatePerson(Personinfo *p, Personinfo p2){
+    strcpy(p->name, p2.name);
+    strcpy(p->address, p2.address);
+    p->age = p2.age;
+    strcpy(p->phonenumber, p2.phonenumber);
+    p->sex = p2.sex;
 }
