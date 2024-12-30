@@ -2,18 +2,17 @@
 #include <cstring>
 
 CaddressBook::CaddressBook(){
-    _head = new Personinfo();
+    _head = make_shared<Personinfo>();
     _tail = _head;
     LOG_INFO("CaddressBook constructed!");
 }
 
 CaddressBook::~CaddressBook(){
-    delete _head;
     LOG_INFO("CaddressBook deleted!");
 }
 
 void CaddressBook::showall(){
-    Personinfo* cur = _head->next;
+    auto cur = _head->next;
     while (cur != nullptr)
     {
         show(cur);
@@ -21,8 +20,8 @@ void CaddressBook::showall(){
     }
 }
 
-void CaddressBook::show(Personinfo *p){
-    if (p == nullptr){
+void CaddressBook::show(shared_ptr<Personinfo> p){
+    if (p.get() == nullptr){
         cout << "查无此人"<<endl;
     }else{
         cout << "----------------------------------" << endl;
@@ -37,26 +36,28 @@ void CaddressBook::show(Personinfo *p){
 }
 
 //传入值和传入指针有什么不同？
-void CaddressBook::addPerson(Personinfo *p){
+void CaddressBook::addPerson(shared_ptr<Personinfo> p){
     _tail->next = p;
     _tail = _tail->next;
 }
 
 void CaddressBook::delPerson(const char * name){
-    Personinfo* cur = _head;
+    shared_ptr<Personinfo> cur = _head;
     while (cur->next != nullptr)
     {
         if(strcmp(cur->next->name, name) == 0){
-            delete cur->next;
-            cur->next = cur->next->next;
+            if(cur->next == _tail){
+                _tail = cur;
+            }
+            cur->next.reset(cur->next->next.get());
             break;
         }
         cur = cur->next;
     }
 }
 
-Personinfo* CaddressBook::findPerson(const char * name){
-    Personinfo* cur = _head;
+shared_ptr<Personinfo> CaddressBook::findPerson(const char * name){
+    shared_ptr<Personinfo> cur = _head;
     while (cur != nullptr)
     {
         if(strcmp(cur->name, name) == 0) break;
@@ -65,7 +66,7 @@ Personinfo* CaddressBook::findPerson(const char * name){
     return cur;
 }
 
-void CaddressBook::updatePerson(Personinfo *p, Personinfo p2){
+void CaddressBook::updatePerson(shared_ptr<Personinfo> p, Personinfo p2){
     strcpy(p->name, p2.name);
     strcpy(p->address, p2.address);
     p->age = p2.age;

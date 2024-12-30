@@ -3,6 +3,7 @@
 #include <iostream>
 #include <unistd.h>
 #include <cstring>
+#include <memory>
 #include "debug.h"
 using namespace std;
 
@@ -19,12 +20,15 @@ struct Personinfo
     char phonenumber[32];
     GENDER sex;
     int age;
-    Personinfo* next;
+    shared_ptr<Personinfo> next;
 
     //默认初始化
     Personinfo():name("佚名"),address("无"),phonenumber("无"),sex(GENDER::OTHER),age(0),next(nullptr){}
     Personinfo(const Personinfo &other){
         cout << "拷贝构造" << endl;
+    }
+    ~Personinfo(){
+        cout << "personinfo ~" << endl;
     }
 };
 
@@ -37,18 +41,18 @@ public:
 
     void showall();
 
-    void show(Personinfo *p);
+    void show(shared_ptr<Personinfo> p);
 
-    void addPerson(Personinfo *p);
+    void addPerson(shared_ptr<Personinfo> p);
 
     void delPerson(const char * name);
 
-    Personinfo* findPerson(const char * name);
+    shared_ptr<Personinfo> findPerson(const char * name);
 
-    void updatePerson(Personinfo *p, Personinfo p2);
+    void updatePerson(shared_ptr<Personinfo> p, Personinfo p2);
 
 private:
-    Personinfo* _head;
-    Personinfo* _tail;
+    shared_ptr<Personinfo> _head;
+    shared_ptr<Personinfo> _tail;
 };
 #endif
