@@ -13,7 +13,7 @@ public:
     ~Cmenu();
 
     //初始化
-    void init(CaddressBook* );
+    void init(shared_ptr<CaddressBook>);
     //运行
     void run();
     //切换状态
@@ -22,5 +22,5 @@ private:
     //状态
     Cstatus* status;
     //通讯录
-    CaddressBook* book;
+    shared_ptr<CaddressBook> book;
 };

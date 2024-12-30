@@ -9,7 +9,7 @@ Cmenu::~Cmenu(){
     //delete book;     //double free!
 }
 
-void Cmenu::init(CaddressBook* bk){
+void Cmenu::init(shared_ptr<CaddressBook> bk){
     book = bk;
 }
 
@@ -36,7 +36,7 @@ void Cmenu::run(){
             auto person = book->findPerson(buf);
             book->show(person);
         }else if(input[0] == '3'){
-            Personinfo* p = new Personinfo();
+            auto p = make_shared<Personinfo>();
             char buf[64];
             cout << "请输入用户姓名" << endl;
             cin >> buf;
