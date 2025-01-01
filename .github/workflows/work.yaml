@@ -17,4 +17,4 @@ jobs:
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
       - name: My Note
-      - run: echo "this is wone's github Actions test"
+        run: echo "this is wone's github Actions test"
