@@ -1,4 +1,4 @@
-#include "../include/menu.h"
+#include "menu.h"
 
 Cmenu::Cmenu(){
     status = nullptr;
@@ -9,8 +9,12 @@ Cmenu::~Cmenu(){
     //delete book;     //double free!
 }
 
-void Cmenu::init(shared_ptr<CaddressBook> bk){
+RTINFO Cmenu::init(shared_ptr<CaddressBook> bk){
+    if(bk == nullptr){
+        return RTINFO::NULLPOINT_ERROR;
+    }
     book = bk;
+    return RTINFO::RTSUCCESS;
 }
 
 void Cmenu::run(){
@@ -33,8 +37,7 @@ void Cmenu::run(){
             cout << "请输入要查找的联系人" << endl;
             char buf[30];
             cin >> buf;
-            auto person = book->findPerson(buf);
-            book->show(person);
+            book->findPerson(buf);
         }else if(input[0] == '3'){
             auto p = make_shared<Personinfo>();
             char buf[64];
@@ -59,7 +62,7 @@ void Cmenu::run(){
             cout << "请输入用户电话" << endl;
             cin >> buf;
             strcpy(p->phonenumber, buf);
-            book->addPerson(p);     //没有释放p，内存泄漏
+            book->addPerson(p);     //如果p是裸指针，这里没有释放p，内存泄漏
         }else if(input[0] == '4'){
             cout << "输入要删除的联系人名字" << endl;
             char buf[30];

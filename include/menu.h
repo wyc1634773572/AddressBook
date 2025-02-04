@@ -1,4 +1,5 @@
 #include "addressbook.h"
+#include "debug.h"
 using namespace std;
 
 class Cstatus{
@@ -13,7 +14,7 @@ public:
     ~Cmenu();
 
     //初始化
-    void init(shared_ptr<CaddressBook>);
+    RTINFO init(shared_ptr<CaddressBook>);
     //运行
     void run();
     //切换状态

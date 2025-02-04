@@ -1,4 +1,4 @@
-#include "../include/addressbook.h"
+#include "addressbook.h"
 #include <cstring>
 
 CaddressBook::CaddressBook(){
@@ -11,37 +11,54 @@ CaddressBook::~CaddressBook(){
     LOG_INFO("CaddressBook deleted!");
 }
 
-void CaddressBook::showall(){
+bool CaddressBook::showall(){
+    if(nullptr == _head)
+        return false;
     auto cur = _head->next;
     while (cur != nullptr)
     {
-        show(cur);
+        show(*cur);
         cur = cur->next;
     }
+    return true;
 }
 
-void CaddressBook::show(shared_ptr<Personinfo> p){
-    if (p.get() == nullptr){
-        cout << "查无此人"<<endl;
-    }else{
-        cout << "----------------------------------" << endl;
-        cout << "|姓名：" << p->name << endl;
-        cout << "|性别：" << p->sex << endl;
-        cout << "|地址：" << p->address << endl;
-        cout << "|年龄：" << p->age << endl;
-        cout << "|电话号码：" << p->phonenumber << endl;
-        cout << "----------------------------------" << endl;
+bool CaddressBook::show(const Personinfo& p){
+    cout << "----------------------------------" << endl;
+    cout << "|姓名：" << p.name << endl;
+    string SEX;
+    switch (p.sex)
+    {
+    case GENDER::FEMALE:
+        SEX = "女";
+        break;
+    case GENDER::MALE:
+        SEX = "男";
+        break;
+    default:
+        SEX = "LGBT+";
+        break;
     }
-    
+    cout << "|性别：" << SEX << endl;
+    cout << "|地址：" << p.address << endl;
+    cout << "|年龄：" << p.age << endl;
+    cout << "|电话号码：" << p.phonenumber << endl;
+    cout << "----------------------------------" << endl;
+    return true;
 }
 
-//传入值和传入指针有什么不同？
-void CaddressBook::addPerson(shared_ptr<Personinfo> p){
+bool CaddressBook::addPerson(shared_ptr<Personinfo> p){
+    if(nullptr == p || nullptr == _tail) 
+        return false;
     _tail->next = p;
     _tail = _tail->next;
+    return true;
 }
 
-void CaddressBook::delPerson(const char * name){
+bool CaddressBook::delPerson(const char * name){
+    if(nullptr == _head || nullptr == name){
+        return false;
+    }
     shared_ptr<Personinfo> cur = _head;
     while (cur->next != nullptr)
     {
@@ -54,22 +71,29 @@ void CaddressBook::delPerson(const char * name){
         }
         cur = cur->next;
     }
+    return true;
 }
 
-shared_ptr<Personinfo> CaddressBook::findPerson(const char * name){
+bool CaddressBook::findPerson(const char * name){
+    if(nullptr == _head || nullptr == name){
+       return false; 
+    }
     shared_ptr<Personinfo> cur = _head;
-    while (cur != nullptr)
+    while (1)
     {
         if(strcmp(cur->name, name) == 0) break;
         cur = cur->next;
+        if(cur == nullptr) return false;
     }
-    return cur;
+    show(*cur);
+    return true;
 }
 
-void CaddressBook::updatePerson(shared_ptr<Personinfo> p, Personinfo p2){
+bool CaddressBook::updatePerson(shared_ptr<Personinfo> p, Personinfo p2){
     strcpy(p->name, p2.name);
     strcpy(p->address, p2.address);
     p->age = p2.age;
     strcpy(p->phonenumber, p2.phonenumber);
     p->sex = p2.sex;
+    return true;
 }
