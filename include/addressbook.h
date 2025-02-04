@@ -27,9 +27,7 @@ struct Personinfo
     Personinfo(const Personinfo &other){
         cout << "拷贝构造" << endl;
     }
-    ~Personinfo(){
-        cout << "personinfo ~" << endl;
-    }
+    ~Personinfo(){}
 };
 
 
@@ -39,17 +37,17 @@ public:
 
     ~CaddressBook();
 
-    void showall();
+    bool showall();
 
-    void show(shared_ptr<Personinfo> p);
+    bool show(const Personinfo& p);
 
-    void addPerson(shared_ptr<Personinfo> p);
+    bool addPerson(shared_ptr<Personinfo> p);
 
-    void delPerson(const char * name);
+    bool delPerson(const char * name);
 
-    shared_ptr<Personinfo> findPerson(const char * name);
+    bool findPerson(const char * name);
 
-    void updatePerson(shared_ptr<Personinfo> p, Personinfo p2);
+    bool updatePerson(shared_ptr<Personinfo> p, Personinfo p2);
 
 private:
     shared_ptr<Personinfo> _head;

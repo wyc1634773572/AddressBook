@@ -6,6 +6,7 @@ using namespace std;
 
 int main(){
     shared_ptr<CaddressBook> book = make_shared<CaddressBook>();
+    book->addPerson(make_shared<Personinfo>());
     Cmenu menu;
     menu.init(book);
     menu.run();
