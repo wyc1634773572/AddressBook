@@ -14,9 +14,9 @@ jobs:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - name: Check out repository code
         uses: actions/checkout@v4
-      - uses: lukka/get-camke@v3
       - run: |
-        sudo apt-get install -y cmake g++
+          sudo apt-get update
+          sudo apt-get install -y cmake g++
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
