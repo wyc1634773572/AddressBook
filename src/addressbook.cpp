@@ -47,7 +47,7 @@ bool CaddressBook::show(const Personinfo& p){
     return true;
 }
 
-bool CaddressBook::addPerson(shared_ptr<Personinfo> p){
+bool CaddressBook::addPerson(const shared_ptr<Personinfo>& p){
     if(nullptr == p || nullptr == _tail) 
         return false;
     _tail->next = p;
