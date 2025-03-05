@@ -41,7 +41,7 @@ public:
 
     bool show(const Personinfo& p);
 
-    bool addPerson(shared_ptr<Personinfo> p);
+    bool addPerson(const shared_ptr<Personinfo>& p);
 
     bool delPerson(const char * name);
 
